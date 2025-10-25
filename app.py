@@ -16,10 +16,11 @@ st.write("---")
 @st.cache_resource
 def load_model():
     model = joblib.load("fraud_model.pkl")
-    scaler = joblib.load("scaler.pkl")
-    return model, scaler
+    scaler_amount = joblib.load("scaler_amount.pkl")
+    scaler_time = joblib.load("scaler_time.pkl")
+    return model, scaler_amount, scaler_time
 
-model, scaler = load_model()
+model, scaler_amount, scaler_time = load_model()
 
 # ---- SIDEBAR INFO ----
 st.sidebar.title("📊 Project Info")
@@ -30,7 +31,7 @@ st.sidebar.info("""
 **Goal:** Detect fraudulent transactions  
 """)
 st.sidebar.write("---")
-st.sidebar.markdown("[GitHub Repo](https://github.com/yourusername/Credit-Card-Fraud-Detection)")
+st.sidebar.markdown("[GitHub Repo](https://github.com/vishakha711/Credit-Card-Fraud-Detection)")
 
 # ---- INPUT SECTION ----
 st.subheader("🧾 Enter Transaction Details")
@@ -47,9 +48,9 @@ with st.expander("Click to Enter Transaction Features"):
     amount = st.number_input("💰 Transaction Amount", min_value=0.0, value=100.0)
     time = st.number_input("⏱ Time (seconds since first transaction)", min_value=0, value=100000)
 
-# scale inputs
-scaled_amount = scaler.transform([[amount]])[0][0]
-scaled_time = scaler.transform([[time]])[0][0]
+# ---- SCALE INPUTS ----
+scaled_amount = scaler_amount.transform([[amount]])[0][0]
+scaled_time = scaler_time.transform([[time]])[0][0]
 final_features = np.array(input_values + [scaled_amount, scaled_time]).reshape(1, -1)
 
 # ---- PREDICTION ----
@@ -87,6 +88,6 @@ else:
 # ---- FOOTER ----
 st.write("---")
 st.markdown(
-    "<p style='text-align:center; color:grey;'>Made by [Your Name] | Powered by Streamlit</p>",
+    "<p style='text-align:center; color:grey;'>Made by Vishakha Ahlawat | Powered by Streamlit</p>",
     unsafe_allow_html=True
 )
