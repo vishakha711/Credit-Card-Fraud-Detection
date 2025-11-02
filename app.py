@@ -68,23 +68,6 @@ if st.button("🔍 Detect Fraud"):
         st.write(f"**Model Confidence:** {(1 - prob):.2%}")
         st.image("https://cdn-icons-png.flaticon.com/512/190/190411.png", width=120)
 
-# ---- OPTIONAL VISUALS ----
-st.write("---")
-st.subheader("📈 Model Insights (Optional)")
-colA, colB = st.columns(2)
-
-# Feature Importance (if available)
-if os.path.exists("feature_importance.png"):
-    colA.image("feature_importance.png", caption="XGBoost Feature Importance", use_container_width=True)
-else:
-    colA.info("Feature Importance chart not found. Add 'feature_importance.png' in repo.")
-
-# ROC Curve (if available)
-if os.path.exists("roc_curve.png"):
-    colB.image("roc_curve.png", caption="ROC Curve Comparison", use_container_width=True)
-else:
-    colB.info("ROC Curve image not found. Add 'roc_curve.png' in repo.")
-
 # ---- FOOTER ----
 st.write("---")
 st.markdown(
